@@ -1,0 +1,51 @@
+
+#include <stdio.h>
+#include<string.h>
+void createZtable(char * str)
+{
+  int Z[strlen(str)];
+  Z[0]=0;
+  int left=0,right=0;
+  for(int i=1;i<strlen(str);i++)
+  {
+      if(i>=right)
+      {
+          left=right=i;
+          while(str[right]==str[right-left] && right<strlen(str))
+          right++;
+          Z[i]=right-left;
+          right--;
+          
+      }
+      else
+      {
+          if(Z[i-left]+i<right)
+          Z[i]=Z[i-left];
+          else
+          {
+              left=i;
+            while(str[right]==str[right-left] && right<strlen(str))
+          right++;
+          Z[i]=right-left;
+          right--;
+          }
+      }
+  }
+  for(int i=0;i<strlen(str);i++)
+  {
+      if(Z[i]==4)
+      printf("%d ",i);
+  }
+}
+
+int main()
+{
+    char str1[100]="aabxaabxcaabxaabxay";
+    char str2[100]="aabx";
+    strcat(str2,"$");
+    strcat(str2,str1);
+    printf("%s\n",str2);
+   createZtable(str2);
+
+    return 0;
+}
